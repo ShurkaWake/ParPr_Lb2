@@ -27,4 +27,33 @@ internal static class Utils
         sb.Append($"{array[^1]}]");
         Console.WriteLine(sb.ToString());
     }
+
+    public static bool Prediction(byte address, byte[] binaryFlags, byte[] history)
+    {
+        return binaryFlags[((address & 0x03) << 4) + (history[address & 0x0F] & 0x0F)] > 1;
+    }
+
+    public static void SetFlags(
+        bool isOk, 
+        byte address, 
+        ref byte[] binaryFlags, 
+        ref byte[] history)
+    {
+        byte historyIndex = (byte) (address & 0x0F);
+        byte index = (byte) (((address & 0x03) << 4) + (history[historyIndex] & 0x0F));
+        history[historyIndex] <<= 1;
+
+        if (isOk)
+        {
+            if (binaryFlags[index] < 3)
+            {
+                binaryFlags[index]++;
+            }
+            history[historyIndex]++;
+        }
+        else if (binaryFlags[index] > 1) 
+        {
+            binaryFlags[index]--;
+        }
+    }
 }
