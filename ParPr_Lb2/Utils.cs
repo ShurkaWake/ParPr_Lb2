@@ -1,4 +1,6 @@
-﻿namespace ParPr_Lb2;
+﻿using System.Diagnostics;
+
+namespace ParPr_Lb2;
 
 internal static class Utils
 {
@@ -30,7 +32,7 @@ internal static class Utils
 
     public static bool Prediction(byte address, byte[] binaryFlags, byte[] history)
     {
-        return binaryFlags[((address & 0x0F) << 4) + (history[address & 0x0F] & 0x0F)] > 1;
+        return binaryFlags[((address & 0x03) << 4) + (history[address & 0x0F] & 0x0F)] > 1;
     }
 
     public static void SetFlags(
@@ -39,8 +41,8 @@ internal static class Utils
         ref byte[] binaryFlags, 
         ref byte[] history)
     {
-        byte historyIndex = (byte) (address & 0x0F);
-        byte index = (byte) (((address & 0x0F) << 4) + (history[historyIndex] & 0x0F));
+        byte historyIndex = (byte) (address & 0x03);
+        byte index = (byte) (((address & 0x03) << 4) + (history[historyIndex] & 0x0F));
         history[historyIndex] <<= 1;
 
         if (isOk)
@@ -55,5 +57,13 @@ internal static class Utils
         {
             binaryFlags[index]--;
         }
+    }
+
+    public static long GetTime(Action act)
+    {
+        long start = Stopwatch.GetTimestamp();
+        act.Invoke();
+        long end = Stopwatch.GetTimestamp();
+        return end - start;
     }
 }
