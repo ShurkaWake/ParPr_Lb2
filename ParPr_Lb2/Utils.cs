@@ -19,11 +19,12 @@ internal static class Utils
     public static void PrintArray(int[] array)
     {
         StringBuilder sb = new StringBuilder("[");
-        foreach(var elem in array[0..^1])
+        foreach(var elem in array[..^1])
         {
             sb.Append(elem.ToString());
             sb.Append(", ");
         }
         sb.Append($"{array[^1]}]");
+        Console.WriteLine(sb.ToString());
     }
 }
