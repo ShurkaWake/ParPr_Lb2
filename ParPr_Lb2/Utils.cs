@@ -15,4 +15,15 @@ internal static class Utils
         }
         return array;
     }
+
+    public static void PrintArray(int[] array)
+    {
+        StringBuilder sb = new StringBuilder("[");
+        foreach(var elem in array[0..^1])
+        {
+            sb.Append(elem.ToString());
+            sb.Append(", ");
+        }
+        sb.Append($"{array[^1]}]");
+    }
 }
