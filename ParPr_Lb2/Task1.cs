@@ -23,7 +23,7 @@ public static class Task1
 
         var predictionsFaults = GetPositiveNumbersWithPredictor(arr);
         Console.WriteLine($"Length: {arrayLength} " +
-            $"| Predictions faults: {predictionsFaults} ");
+            $"| Prediction success ratio: {(1 - predictionsFaults) * 100:F2}%");
 
         Console.WriteLine();
         Console.WriteLine("~#~#~#~#~ Task1 ~#~#~#~#~");
@@ -53,24 +53,42 @@ public static class Task1
         return counter + arr.Length;
     }
 
-    private static int GetPositiveNumbersWithPredictor(int[] arr)
+    private static double GetPositiveNumbersWithPredictor(int[] arr)
     {
-        int counter = 0;
+        int result = 0;
         int faults = 0;
-        byte address = (byte)RandomNumberGenerator.GetInt32(0, 256);
+        int total = 0;
+
+        byte cycleAddress = 0;
+        byte ifAdress = 1;
         byte[] binaryFlags = new byte[64];
         byte[] history = new byte[16];
 
-        foreach (var number in arr)
+        int i = 0;
+        while(true)
         {
-            bool actual = number >= 0;
-            bool expected = Utils.Prediction(address, binaryFlags, history);
+            bool cycleActual = i >= arr.Length;
+            bool cyclePrediction = Utils.Prediction(cycleAddress, binaryFlags, history);
+            faults += cycleActual != cyclePrediction ? 1 : 0;
+            total++;
+            Utils.SetFlags(cycleActual, cycleAddress, ref binaryFlags, ref history);
 
-            counter += actual ? 1 : 0;
-            faults += actual != expected ? 1 : 0;
-            Utils.SetFlags(actual, address, ref binaryFlags, ref history);
+            if (cycleActual)
+            {
+                break;
+            }
+
+            bool ifActual = arr[i] >= 0;
+            bool ifPrediction = Utils.Prediction(ifAdress, binaryFlags, history);
+
+            result += ifActual ? 1 : 0;
+            faults += ifActual != ifPrediction ? 1 : 0;
+            total++;
+            Utils.SetFlags(ifActual, ifAdress, ref binaryFlags, ref history);
+            
+            i++;
         }
 
-        return faults;
+        return faults / (double) total;
     }
 }
