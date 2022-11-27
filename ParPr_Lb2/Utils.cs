@@ -30,7 +30,7 @@ internal static class Utils
 
     public static bool Prediction(byte address, byte[] binaryFlags, byte[] history)
     {
-        return binaryFlags[((address & 0x03) << 4) + (history[address & 0x0F] & 0x0F)] > 1;
+        return binaryFlags[((address & 0x0F) << 4) + (history[address & 0x0F] & 0x0F)] > 1;
     }
 
     public static void SetFlags(
@@ -40,7 +40,7 @@ internal static class Utils
         ref byte[] history)
     {
         byte historyIndex = (byte) (address & 0x0F);
-        byte index = (byte) (((address & 0x03) << 4) + (history[historyIndex] & 0x0F));
+        byte index = (byte) (((address & 0x0F) << 4) + (history[historyIndex] & 0x0F));
         history[historyIndex] <<= 1;
 
         if (isOk)
