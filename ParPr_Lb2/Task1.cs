@@ -4,7 +4,7 @@ public static class Task1
 {
     public static void Show()
     {
-        int arrayLength = 1 << 20;
+        int arrayLength = 1 << 22;
 
         Console.WriteLine();
         Console.WriteLine("~#~#~#~#~ Task1 ~#~#~#~#~");
