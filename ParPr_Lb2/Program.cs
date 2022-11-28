@@ -3,5 +3,5 @@ using ParPr_Lb2;
 
 Task1.Show();
 Task2.Show();
-//Task3.Show();
+Task3.Show();
 //Task4.Show();
