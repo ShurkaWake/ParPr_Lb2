@@ -87,23 +87,16 @@ public static class Task2
 
     private static void BubbleSortOptimized(ref int[] arr)
     {
-        for (int i = 0; i < arr.Length - 1; i++)
+        for (int i = arr.Length - 1; i > 0; i--)
         {
-            bool flag = false;
-            for (int j = i + 1; j < arr.Length; j++)
+            for (int j = i - 1; j > 0; j--)
             {
-                if (arr[i] > arr[j])
+                if (arr[i] < arr[j])
                 {
                     int temp = arr[j];
                     arr[j] = arr[i];
                     arr[i] = temp;
-                    flag = true;
                 }
-            }
-
-            if (!flag)
-            {
-                break;
             }
         }
     }

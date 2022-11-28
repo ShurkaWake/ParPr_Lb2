@@ -29,7 +29,7 @@ public static class Task1
         Utils.PrintArray(arr);
         Console.WriteLine($"Not optimized counted positive: {GetPositiveNumbersInArray(arr)}");
         Console.WriteLine($"Optimized counted positive: {GetPositiveNumbersInArrayOptimized(arr)}");
-        Console.WriteLine($"Not optimized with predictor counted positive: {GetPositiveNumbersInArrayOptimized(arr)}");
+        Console.WriteLine($"Not optimized with predictor counted positive: {GetPositiveNumbersWithPredictor(arr).result}");
 
     }
 
@@ -53,7 +53,7 @@ public static class Task1
     {
         int arrayLength = 1 << 22;
         var arr = Utils.GetArray(arrayLength);
-        var predictionsFaults = GetPositiveNumbersWithPredictor(arr);
+        (_, var predictionsFaults) = GetPositiveNumbersWithPredictor(arr);
         Console.WriteLine($"Length: {arrayLength} " +
             $"| Prediction success ratio: {(1 - predictionsFaults) * 100:F2}%");
     }
@@ -61,9 +61,9 @@ public static class Task1
     private static int GetPositiveNumbersInArray(int[] arr)
     {
         int counter = 0;
-        foreach(var number in arr)
+        for (int i = 0; i < arr.Length; i++)
         {
-            if (number > 0)
+            if (arr[i] >= 0)
             {
                 counter++;
             }
@@ -74,14 +74,14 @@ public static class Task1
     private static int GetPositiveNumbersInArrayOptimized(int[] arr)
     {
         int counter = 0;
-        foreach (var number in arr)
+        for (int i = 0; i < arr.Length; i++)
         {
-            counter += number >> (sizeof(int) * 8 - 1);
+            counter += arr[i] >> (sizeof(int) * 8 - 1);
         }
         return counter + arr.Length;
     }
 
-    private static double GetPositiveNumbersWithPredictor(int[] arr)
+    private static (double result, double faultsRate) GetPositiveNumbersWithPredictor(int[] arr)
     {
         int result = 0;
         int faults = 0;
@@ -117,6 +117,6 @@ public static class Task1
             i++;
         }
 
-        return faults / (double) total;
+        return (result, faults / (double) total);
     }
 }
