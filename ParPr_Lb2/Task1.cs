@@ -3,9 +3,7 @@
 public static class Task1
 {
     public static void Show()
-    {
-        
-
+    {   
         Console.WriteLine();
         Console.WriteLine("~#~#~#~#~ Task1 ~#~#~#~#~");
         Console.WriteLine();
