@@ -5,14 +5,14 @@ public static class Task4
     public static void Show()
     {
         Console.WriteLine();
-        Console.WriteLine("~#~#~#~#~ Task3 ~#~#~#~#~");
+        Console.WriteLine("~#~#~#~#~ Task4 ~#~#~#~#~");
         Console.WriteLine();
 
         CheckWorking();
 
 
         Console.WriteLine();
-        Console.WriteLine("~#~#~#~#~ Task3 ~#~#~#~#~");
+        Console.WriteLine("~#~#~#~#~ Task4 ~#~#~#~#~");
         Console.WriteLine();
     }
 
