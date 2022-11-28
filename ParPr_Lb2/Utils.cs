@@ -21,9 +21,21 @@ internal static class Utils
         foreach(var elem in array[..^1])
         {
             sb.Append(elem.ToString());
-            sb.Append(", ");
+            sb.Append("; ");
         }
         sb.Append($"{array[^1]}]");
+        Console.WriteLine(sb.ToString());
+    }
+
+    public static void PrintArray(double[] array)
+    {
+        StringBuilder sb = new StringBuilder("[");
+        foreach (var elem in array[..^1])
+        {
+            sb.Append(elem.ToString("F2"));
+            sb.Append("; ");
+        }
+        sb.Append($"{array[^1]:F2}]");
         Console.WriteLine(sb.ToString());
     }
 
